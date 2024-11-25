@@ -8,8 +8,9 @@ const Register = () => {
     username: 'luis',
     name: 'luis',
     email: 'luis@hotmail.com',
-    password: '123',
+    password: '111',
     role: 'regular',
+    points:0,
     avatar: 'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg',
   });
 
@@ -29,8 +30,10 @@ const Register = () => {
       formData.email,
       formData.role,
       formData.avatar,
-      formData.password
+      formData.password,
+      formData.points,
     );
+    console.log("salvo points",formData.points)
     const users = getFromSession('users') || [];
     users.push(newUser);
     saveToSession('users', users);

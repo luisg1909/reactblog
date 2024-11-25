@@ -7,8 +7,11 @@ export const login = (username) => {
   return user;
 };
 
-export const logout = () => {
-  sessionStorage.removeItem('currentUser');
+export const getCurrentUser = () => {
+  const user = sessionStorage.getItem('currentUser');
+  return user ? JSON.parse(user) : null;
 };
 
-export const getCurrentUser = () => getFromSession('currentUser');
+export const logout = () => {
+  sessionStorage.removeItem('currentUser'); // Remove the current user
+};

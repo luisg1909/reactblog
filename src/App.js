@@ -9,6 +9,7 @@ import PostDetail from './pages/PostDetail';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import PostPage from './components/Post';
+import EditPost from './pages/EditPost';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/post/:postId" element={<PostDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/postcreate" element={<PostPage />} />
+            <Route path="/edit/:postId" element={<EditPost />} />
 
             {/* Redirect unknown routes to home */}
             <Route path="*" element={<Navigate to="/" />} />

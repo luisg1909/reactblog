@@ -41,9 +41,14 @@ const PostDetail = () => {
     // Update user points
     const users = getFromSession('users') || [];
     const user = users.find((u) => u.username === currentUser.username);
+  
     if (user) {
-      user.points = (user.points || 0) + 1;
-      saveToSession('users', users);
+      console.log(`Before incrementing points: ${user.points}`); // Debug log
+      user.points = (user.points || 0) + 1; // Increment points
+      console.log(`After incrementing points: ${user.points}`); // Debug log
+      saveToSession('users', users); // Save updated users to sessionStorage
+    } else {
+      console.error('Current user not found in users list.');
     }
   };
 
@@ -91,7 +96,7 @@ const PostDetail = () => {
                 />
                 <div>
                   <strong>{comment.user.username}</strong>
-                  <br />
+                  <br />                  
                   <small>{new Date(comment.date).toLocaleString()}</small>
                 </div>
               </div>

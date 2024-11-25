@@ -1,75 +1,57 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert, Carousel } from 'react-bootstrap';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getFromSession, saveToSession } from '../utils/SessionStorage';
-import { getCurrentUser } from '../utils/Auth';
-import { Post } from '../utils/DataModel';
-import { useNavigate } from 'react-router-dom';
+import { Form, Button, Carousel } from 'react-bootstrap';
 
-// Import images dynamically from assets/landscape folder
+// Dynamically import images from the assets/landscape folder
 const importAll = (r) => r.keys().map(r);
 const images = importAll(require.context('../assets/landscape', false, /\.(png|jpe?g|svg)$/));
 
-const PostPage = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    image: '', // Stores the selected image
-  });
-  const [selectedImage, setSelectedImage] = useState(images[0]); // Default to the first image
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+const EditPost = () => {
+  const { postId } = useParams();
+  const posts = getFromSession('posts') || [];
+  const post = posts.find((p) => p.id === Number(postId));
   const navigate = useNavigate();
 
-  const currentUser = getCurrentUser();
-
-  if (!currentUser) {
-    navigate('/login');
-    return null;
-  }
+  const [formData, setFormData] = useState({
+    title: post ? post.title : '',
+    content: post ? post.content : '',
+    image: post ? post.image : images[0], // Default to the post's current image or the first image
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleImageSelect = (image) => {
-    setSelectedImage(image);
-    setFormData({ ...formData, image }); // Update the selected image in the form data
+  const handleImageSelect = (selectedImage) => {
+    setFormData({ ...formData, image: selectedImage });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { title, content, image } = formData;
+  const handleSave = () => {
+    if (!post) return;
 
-    if (!title || !content || !image) {
-      setError('Title, Content, and Image are required.');
-      return;
-    }
+    // Update the post
+    post.title = formData.title;
+    post.content = formData.content;
+    post.image = formData.image;
 
-    const posts = getFromSession('posts') || [];
-    const newPost = new Post(
-      posts.length + 1, // Generate a unique ID for the post
-      title,
-      content,
-      currentUser.username,
-      new Date(),
-      image
-    );
-
-    posts.push(newPost);
+    // Save updated posts to sessionStorage
     saveToSession('posts', posts);
 
-    setSuccess(true);
-    setError(null);
-    setFormData({ title: '', content: '', image: '' }); // Reset the form
+    alert('Post updated successfully!');
+    navigate('/');
   };
 
+  if (!post) {
+    return <p>Post not found.</p>;
+  }
+
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto', marginTop: '50px' }}>
-      <h3>Create a New Post</h3>
-      {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">Post created successfully!</Alert>}
-      <Form onSubmit={handleSubmit}>
+    <div style={{ maxWidth: '600px', margin: 'auto', marginTop: '20px' }}>
+      <h3>Edit Post</h3>
+      <Form>
+        {/* Title Input */}
         <Form.Group className="mb-3" controlId="title">
           <Form.Label>Title</Form.Label>
           <Form.Control
@@ -78,9 +60,10 @@ const PostPage = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            required
           />
         </Form.Group>
+
+        {/* Content Input */}
         <Form.Group className="mb-3" controlId="content">
           <Form.Label>Content</Form.Label>
           <Form.Control
@@ -90,7 +73,6 @@ const PostPage = () => {
             name="content"
             value={formData.content}
             onChange={handleInputChange}
-            required
           />
         </Form.Group>
 
@@ -109,10 +91,10 @@ const PostPage = () => {
                 />
                 <Carousel.Caption>
                   <Button
-                    variant={selectedImage === image ? 'success' : 'secondary'}
+                    variant={formData.image === image ? 'success' : 'secondary'}
                     onClick={() => handleImageSelect(image)}
                   >
-                    {selectedImage === image ? 'Selected' : 'Select'}
+                    {formData.image === image ? 'Selected' : 'Select'}
                   </Button>
                 </Carousel.Caption>
               </Carousel.Item>
@@ -120,12 +102,13 @@ const PostPage = () => {
           </Carousel>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Post
+        {/* Save Button */}
+        <Button variant="success" onClick={handleSave}>
+          Save Changes
         </Button>
       </Form>
     </div>
   );
 };
 
-export default PostPage;
+export default EditPost;

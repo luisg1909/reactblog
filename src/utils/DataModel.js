@@ -1,10 +1,11 @@
 class User {
-    constructor(username, name, email, role = 'regular', avatar = '', points = 0) {
+    constructor(username, name, email, role = 'regular', avatar = '', password = '', points = 0) {
       this.username = username;
       this.name = name;
       this.email = email;
       this.role = role; // 'admin' or 'regular'
       this.avatar = avatar;
+      this.password = password; // Store the password
       this.points = points;
     }
   }
