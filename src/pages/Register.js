@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { saveToSession, getFromSession } from '../utils/SessionStorage';
 import { User } from '../utils/DataModel';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
     username: 'luis',
     name: 'luis',
     email: 'luis@hotmail.com',
-    password: '111',
+    password: '',
     role: 'regular',
     points:0,
     avatar: 'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg',
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -37,7 +39,8 @@ const Register = () => {
     const users = getFromSession('users') || [];
     users.push(newUser);
     saveToSession('users', users);
-    alert('User registered successfully!');
+    navigate('/', { state: { message: 'User registered successfully!' } });
+
   };
 
   return (

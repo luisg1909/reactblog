@@ -5,7 +5,6 @@ import { getCurrentUser } from '../utils/Auth';
 import { Post } from '../utils/DataModel';
 import { useNavigate } from 'react-router-dom';
 
-// Import images dynamically from assets/landscape folder
 const importAll = (r) => r.keys().map(r);
 const images = importAll(require.context('../assets/landscape', false, /\.(png|jpe?g|svg)$/));
 
@@ -17,7 +16,6 @@ const PostPage = () => {
   });
   const [selectedImage, setSelectedImage] = useState(images[0]); // Default to the first image
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const currentUser = getCurrentUser();
@@ -59,16 +57,14 @@ const PostPage = () => {
     posts.push(newPost);
     saveToSession('posts', posts);
 
-    setSuccess(true);
-    setError(null);
-    setFormData({ title: '', content: '', image: '' }); // Reset the form
+    // Redirect to home with success message
+    navigate('/', { state: { message: 'Post created successfully!' } });
   };
 
   return (
     <div style={{ maxWidth: '600px', margin: 'auto', marginTop: '50px' }}>
       <h3>Create a New Post</h3>
       {error && <Alert variant="danger">{error}</Alert>}
-      {success && <Alert variant="success">Post created successfully!</Alert>}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="title">
           <Form.Label>Title</Form.Label>

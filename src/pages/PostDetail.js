@@ -23,7 +23,10 @@ const PostDetail = () => {
   }, [comments, posts, post]);
 
   const handleAddComment = () => {
+
     if (!newComment.trim()) return;
+  const currentUser = getCurrentUser();
+  if (!currentUser) {alert("you must be logged in");return;}
 
     const comment = {
       id: comments.length + 1,
@@ -44,7 +47,9 @@ const PostDetail = () => {
   
     if (user) {
       console.log(`Before incrementing points: ${user.points}`); // Debug log
-      user.points = (user.points || 0) + 1; // Increment points
+    
+      user.points = (parseInt(user.points, 10) || 0) + 1;
+
       console.log(`After incrementing points: ${user.points}`); // Debug log
       saveToSession('users', users); // Save updated users to sessionStorage
     } else {

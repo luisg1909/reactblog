@@ -1,13 +1,16 @@
 import React from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Alert } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getFromSession } from '../utils/SessionStorage';
 import { getCurrentUser } from '../utils/Auth';
-import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const posts = getFromSession('posts') || [];
-  const currentUser = getCurrentUser(); // Could be null if not logged in
+  const currentUser = getCurrentUser();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const message = location.state?.message;
 
   const handleEdit = (postId) => {
     navigate(`/edit/${postId}`); // Navigate to the edit page
@@ -15,6 +18,11 @@ const Home = () => {
 
   return (
     <div style={{ maxWidth: '800px', margin: 'auto', marginTop: '20px' }}>
+      {message && (
+        <Alert variant="success" className="mb-4">
+          {message}
+        </Alert>
+      )}
       <h3>All Posts</h3>
       <Table striped bordered hover>
         <thead>
@@ -32,7 +40,6 @@ const Home = () => {
               <td>{post.author}</td>
               <td>{new Date(post.dateCreated).toLocaleDateString()}</td>
               <td>
-                {/* View Button */}
                 <Button
                   variant="primary"
                   onClick={() => navigate(`/post/${post.id}`)}
@@ -40,8 +47,6 @@ const Home = () => {
                 >
                   View
                 </Button>
-
-                {/* Conditionally Render Edit Button for Admins */}
                 {currentUser && currentUser.role === 'admin' && (
                   <Button
                     variant="success"

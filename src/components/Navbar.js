@@ -20,6 +20,7 @@ const AppNavbar = () => {
     <Nav className="me-auto">
       <Nav.Link href="/">Home</Nav.Link>
       <Nav.Link href="/profile">Profile</Nav.Link>
+      <Nav.Link href="/usertable">Users</Nav.Link>
       <Nav.Link href="/register">Register</Nav.Link>
       {currentUser ? (
            <>

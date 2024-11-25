@@ -17,8 +17,7 @@ const Login = () => {
     e.preventDefault();
     const users = getFromSession('users') || [];
     const user = users.find(
-      (u) => u.username === formData.username 
-      //&& u.password === formData.password
+      (u) => u.username === formData.username && u.password === formData.password
     );
 
     if (user) {

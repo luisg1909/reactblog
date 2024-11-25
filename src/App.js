@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import PostPage from './components/Post';
 import EditPost from './pages/EditPost';
+import UserTable from './components/UserTable'; // Import UserTable
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/postcreate" element={<PostPage />} />
             <Route path="/edit/:postId" element={<EditPost />} />
+            <Route path="/usertable" element={<UserTable />} />
 
             {/* Redirect unknown routes to home */}
             <Route path="*" element={<Navigate to="/" />} />

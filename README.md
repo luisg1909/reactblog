@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# BlogApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+BlogApp is a simple blogging platform built with **React**, **Bootstrap**, and **SessionStorage**.
+ The application provides two types of user roles: regular users and admin users. 
+ It allows users to create, view, and comment on posts, the users earns points for every comment, a point is added.
+ Admin users also have the same functions of regular users(post,comment,earns points) and have the ability to manage posts and users.
+ sessionstorage is used for save users and post,not cloud or local database connection is necesary
+---
 
-## Available Scripts
+## **Features**
 
-In the project directory, you can run:
+### **User Roles**
+1. **Admin:**
+   - Can create posts.
+   - Can edit and delete any post.
+   - Can view and modify all user details (username, name, email, role, password, and points).
+   - Can reset user passwords.
+   - Can view the passwords of all users.
+   - Can register new users (username,name,email,password,role)
 
-### `npm start`
+2. **Regular User:**
+   - Can create posts.
+   - Can edit their own posts.
+   - Can comment on posts (earns points for each comment).
+   - Can view user details but cannot modify them.
+   - Can register new users (username,name,email,password,role)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **Functionalities**
 
-### `npm test`
+#### **Post Management**
+- **Create Posts**:
+  - Users can create posts with a title, content, and an image selected from a carousel of predefined images.
+    (to create post first login with username and password that previously where registered)
+  
+- **Edit Posts**:
+  - Admins can edit any post (title, content, and image).
+  - Regular users can edit only their own posts.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **View Posts**:
+  - All posts are visible to both logged-in and non-logged-in users.
 
-### `npm run build`
+#### **User Management**
+- **User List**:
+  - Displays all registered users in a sortable Bootstrap table with details like role, name, username, email, points, and password (admin only).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Modify User Details** (Admin Only):
+  - Admins can edit user details (name, username, email, role, points, and password) directly from the table.
+  - Admins can reset user passwords to a default value (`default123`).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### **Sorting**
+- Users and posts are displayed in sortable tables, with sorting options for columns like name, role, and points.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### **Authentication**
+- Users can register with a username, name, email, avatar, and password.
+- Users can log in to access role-based features like editing their own posts or managing users (for admins).
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Technologies Used**
+1. **Frontend**:
+   - React
+   - React Router
+   - React-Bootstrap
+   - SessionStorage (for data persistence)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Design**:
+   - Bootstrap (Responsive UI)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## **Steps to Install and Run the Project**
 
-## Learn More
+### **Prerequisites**
+- Node.js installed on your system.
+- A package manager like `npm` or `yarn`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **Installation**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-repo/blogapp.git
+   cd blogapp
+### **Autor**
+   Developed by Luis Godoy @luisg1909. for demo purposes to demostrate my skills about react,typescript,use of interfaces,css,components. part of my portfolio. Feel free to contribute or reach out for questions or improvements.
+   
